@@ -1,0 +1,62 @@
+buildscript {
+    ext.koin_version = "2.2.3"
+
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath "io.insert-koin:koin-gradle-plugin:$koin_version"
+    }
+}
+
+plugins {
+    id 'org.jetbrains.kotlin.jvm' version '1.4.10'
+    id 'com.github.johnrengelman.shadow' version '5.2.0'
+}
+
+apply plugin: 'koin'
+
+group 'ua.com.radiokot.feed'
+version '1.0'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib"
+
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.0'
+    implementation 'com.fasterxml.jackson.module:jackson-module-kotlin:2.13.0'
+
+    implementation "io.insert-koin:koin-core:$koin_version"
+    testImplementation "io.insert-koin:koin-test:$koin_version"
+
+    implementation 'mysql:mysql-connector-java:8.0.27'
+    implementation 'org.apache.commons:commons-dbcp2:2.9.0'
+
+    implementation 'org.slf4j:slf4j-api:1.7.32'
+    implementation 'org.slf4j:slf4j-log4j12:1.7.32'
+    implementation 'io.github.microutils:kotlin-logging-jvm:2.0.11'
+}
+
+compileKotlin {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
+    }
+}
+
+jar {
+    manifest {
+        attributes(
+                'Main-Class': 'ua.com.radiokot.feed.api.Application'
+        )
+    }
+}
+
+shadowJar {
+    archiveFileName = 'api.jar'
+}
