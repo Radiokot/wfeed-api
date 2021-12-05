@@ -15,6 +15,7 @@ import ua.com.radiokot.feed.api.di.KLoggerKoinLogger
 import ua.com.radiokot.feed.api.di.injectionModules
 import ua.com.radiokot.feed.api.jsonapi.JsonApiDate
 import ua.com.radiokot.feed.api.posts.PostsJsonApiController
+import ua.com.radiokot.feed.api.status.StatusJsonApiController
 import java.util.*
 
 @KoinApiExtension
@@ -40,19 +41,21 @@ object Application : KoinComponent {
             .routes {
                 path("categories") {
                     val controller = get<LegacyCategoriesApiController>()
-                    ApiBuilder.get("/", controller::getAll)
+                    ApiBuilder.get(controller::getAll)
                 }
 
                 path("v2/") {
                     path("categories") {
                         val controller = get<CategoriesJsonApiController>()
-                        ApiBuilder.get("/", controller::getAll)
+                        ApiBuilder.get(controller::getAll)
                     }
 
                     path("posts") {
                         val controller = get<PostsJsonApiController>()
-                        ApiBuilder.get("/", controller::get)
+                        ApiBuilder.get(controller::get)
                     }
+
+                    ApiBuilder.get(get<StatusJsonApiController>()::get)
                 }
             }
             .start(getKoin().getProperty("PORT", 8041))

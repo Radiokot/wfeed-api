@@ -18,6 +18,8 @@ import ua.com.radiokot.feed.api.extensions.getNotEmptyProperty
 import ua.com.radiokot.feed.api.jsonapi.JsonApiDate
 import ua.com.radiokot.feed.api.posts.PostsJsonApiController
 import ua.com.radiokot.feed.api.posts.model.PostResource
+import ua.com.radiokot.feed.api.status.StatusJsonApiController
+import ua.com.radiokot.feed.api.status.model.StatusResource
 import ua.com.radiokot.feed.attachments.service.FeedAttachmentsService
 import ua.com.radiokot.feed.attachments.service.RealFeedAttachmentsService
 import ua.com.radiokot.feed.auhtors.service.FeedAuthorsService
@@ -101,7 +103,8 @@ val injectionModules: List<Module> = listOf(
                 PostResource::class.java,
                 AuthorResource::class.java,
                 AttachmentResource::class.java,
-                PhotoAttachmentResource::class.java
+                PhotoAttachmentResource::class.java,
+                StatusResource::class.java
             )
         }
     },
@@ -129,6 +132,14 @@ val injectionModules: List<Module> = listOf(
                 feedAuthorsService = get(),
                 feedPostsService = get(),
                 feedAttachmentsService = get(),
+                resourceConverter = get()
+            )
+        }
+
+        // Status
+        single {
+            StatusJsonApiController(
+                feedPostsService = get(),
                 resourceConverter = get()
             )
         }
