@@ -28,4 +28,8 @@ public class CategoryResource extends BaseResource {
         this.description.put("en", c.getCategory().getDescriptionEn());
         this.description.put("ru", c.getCategory().getDescriptionRu());
     }
+
+    public CategoryResource(String id) {
+        super(id);
+    }
 }

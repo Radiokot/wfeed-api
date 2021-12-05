@@ -1,4 +1,4 @@
-package ua.com.radiokot.feed.updater.di
+package ua.com.radiokot.feed.api.di
 
 import mu.KLogger
 import org.koin.core.logger.Level
