@@ -4,18 +4,16 @@ import java.sql.ResultSet
 
 data class FeedCategory(
     val id: String,
-    val displayOrder: Int?,
     val descriptionRu: String,
     val descriptionUk: String,
     val descriptionEn: String,
     val thumbUrl: String,
 ) {
-    constructor(resultSet: ResultSet) : this(
-        id = resultSet.getString("id"),
-        displayOrder = resultSet.getInt("display_order"),
-        descriptionRu = resultSet.getString("description_ru"),
-        descriptionUk = resultSet.getString("description_uk"),
-        descriptionEn = resultSet.getString("description_en"),
-        thumbUrl = resultSet.getString("thumb")
+    constructor(r: ResultSet) : this(
+        id = r.getString("id"),
+        descriptionRu = r.getString("description_ru"),
+        descriptionUk = r.getString("description_uk"),
+        descriptionEn = r.getString("description_en"),
+        thumbUrl = r.getString("thumb")
     )
 }

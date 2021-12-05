@@ -6,6 +6,7 @@ import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import org.apache.commons.dbcp2.BasicDataSource
 import org.koin.core.module.Module
 import org.koin.dsl.module
+import ua.com.radiokot.feed.api.categories.legacy.LegacyCategoriesApiController
 import ua.com.radiokot.feed.api.extensions.getNotEmptyProperty
 import ua.com.radiokot.feed.categories.service.FeedCategoriesService
 import ua.com.radiokot.feed.categories.service.RealFeedCategoriesService
@@ -50,6 +51,15 @@ val injectionModules: List<Module> = listOf(
                 minIdle = 3
                 maxIdle = 9
             }
+        }
+    },
+
+    // API controllers
+    module {
+        single {
+            LegacyCategoriesApiController(
+                feedCategoriesService = get()
+            )
         }
     },
 )
