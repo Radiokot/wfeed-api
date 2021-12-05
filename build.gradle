@@ -40,6 +40,7 @@ dependencies {
     implementation 'io.github.microutils:kotlin-logging-jvm:2.0.11'
 
     implementation 'io.javalin:javalin:3.11.0'
+    implementation 'com.github.jasminb:jsonapi-converter:0.11'
 }
 
 compileKotlin {
@@ -49,6 +50,10 @@ compileKotlin {
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_1_8.toString()
     }
+}
+
+sourceSets.main {
+    java.srcDirs("src/main/kotlin")
 }
 
 jar {

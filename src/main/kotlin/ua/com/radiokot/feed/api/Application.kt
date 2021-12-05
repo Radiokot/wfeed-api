@@ -8,6 +8,7 @@ import org.koin.core.component.KoinApiExtension
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.get
 import org.koin.core.context.startKoin
+import ua.com.radiokot.feed.api.categories.CategoriesJsonApiController
 import ua.com.radiokot.feed.api.categories.legacy.LegacyCategoriesApiController
 import ua.com.radiokot.feed.updater.di.KLoggerKoinLogger
 import ua.com.radiokot.feed.updater.di.injectionModules
@@ -33,7 +34,11 @@ object Application : KoinComponent {
             .routes {
                 path("categories") {
                     val controller = get<LegacyCategoriesApiController>()
+                    ApiBuilder.get("/", controller::getAll)
+                }
 
+                path("v2/categories") {
+                    val controller = get<CategoriesJsonApiController>()
                     ApiBuilder.get("/", controller::getAll)
                 }
             }

@@ -3,10 +3,13 @@ package ua.com.radiokot.feed.updater.di
 import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import com.github.jasminb.jsonapi.ResourceConverter
 import org.apache.commons.dbcp2.BasicDataSource
 import org.koin.core.module.Module
 import org.koin.dsl.module
+import ua.com.radiokot.feed.api.categories.CategoriesJsonApiController
 import ua.com.radiokot.feed.api.categories.legacy.LegacyCategoriesApiController
+import ua.com.radiokot.feed.api.categories.model.CategoryResource
 import ua.com.radiokot.feed.api.extensions.getNotEmptyProperty
 import ua.com.radiokot.feed.categories.service.FeedCategoriesService
 import ua.com.radiokot.feed.categories.service.RealFeedCategoriesService
@@ -54,11 +57,29 @@ val injectionModules: List<Module> = listOf(
         }
     },
 
+    // JSONAPI
+    module {
+        single {
+            ResourceConverter(
+               CategoryResource::class.java
+            )
+        }
+    },
+
     // API controllers
     module {
+        // Legacy categories
         single {
             LegacyCategoriesApiController(
                 feedCategoriesService = get()
+            )
+        }
+
+        // Categories
+        single {
+            CategoriesJsonApiController(
+                feedCategoriesService = get(),
+                resourceConverter = get()
             )
         }
     },
