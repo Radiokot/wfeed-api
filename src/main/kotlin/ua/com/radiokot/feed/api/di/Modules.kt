@@ -7,6 +7,8 @@ import org.apache.commons.dbcp2.BasicDataSource
 import org.koin.core.module.Module
 import org.koin.dsl.module
 import ua.com.radiokot.feed.api.extensions.getNotEmptyProperty
+import ua.com.radiokot.feed.categories.service.FeedCategoriesService
+import ua.com.radiokot.feed.categories.service.RealFeedCategoriesService
 import javax.sql.DataSource
 
 val injectionModules: List<Module> = listOf(
@@ -20,6 +22,11 @@ val injectionModules: List<Module> = listOf(
 
     // Services
     module {
+        single<FeedCategoriesService> {
+            RealFeedCategoriesService(
+                dataSource = get()
+            )
+        }
     },
 
     // Database
