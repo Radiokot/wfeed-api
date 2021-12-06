@@ -19,7 +19,7 @@ import ua.com.radiokot.feed.api.posts.PostsJsonApiController
 import ua.com.radiokot.feed.api.posts.legacy.LegacyPostsApiController
 import ua.com.radiokot.feed.api.status.StatusJsonApiController
 import ua.com.radiokot.feed.api.util.JavalinResponseStatusLogger
-import java.util.*
+import java.time.Instant
 
 @KoinApiExtension
 object Application : KoinComponent {
@@ -35,7 +35,7 @@ object Application : KoinComponent {
             modules(injectionModules)
         }
 
-        JavalinValidation.register(Date::class.java, JsonApiDate.fromStringConverter)
+        JavalinValidation.register(Instant::class.java, JsonApiDate.javalinValidator)
 
         Javalin
             .create { config ->

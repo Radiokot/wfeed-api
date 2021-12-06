@@ -2,7 +2,6 @@ package ua.com.radiokot.feed.api.di
 
 import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.fasterxml.jackson.databind.module.SimpleModule
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.github.jasminb.jsonapi.ResourceConverter
 import org.apache.commons.dbcp2.BasicDataSource
@@ -29,7 +28,6 @@ import ua.com.radiokot.feed.categories.service.FeedCategoriesService
 import ua.com.radiokot.feed.categories.service.RealFeedCategoriesService
 import ua.com.radiokot.feed.posts.service.FeedPostsService
 import ua.com.radiokot.feed.posts.service.RealFeedPostsService
-import java.util.*
 import javax.sql.DataSource
 
 val injectionModules: List<Module> = listOf(
@@ -38,9 +36,7 @@ val injectionModules: List<Module> = listOf(
         single<ObjectMapper> {
             jacksonObjectMapper()
                 .disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
-                .registerModule(SimpleModule().apply {
-                    addSerializer(Date::class.java, JsonApiDate.serializer)
-                })
+                .registerModule(JsonApiDate.jacksonModule)
         }
     },
 

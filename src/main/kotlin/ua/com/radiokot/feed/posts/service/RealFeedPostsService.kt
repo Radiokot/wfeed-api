@@ -4,7 +4,7 @@ import mu.KotlinLogging
 import ua.com.radiokot.feed.auhtors.model.FeedSite
 import ua.com.radiokot.feed.posts.model.FeedPost
 import java.sql.Timestamp
-import java.util.*
+import java.time.Instant
 import javax.sql.DataSource
 
 class RealFeedPostsService(
@@ -14,7 +14,7 @@ class RealFeedPostsService(
 
     override fun getPosts(
         authorIds: Set<String>,
-        fromDate: Date?,
+        fromDate: Instant?,
         limit: Int
     ): List<FeedPost> {
         logger.debug {
@@ -35,7 +35,7 @@ class RealFeedPostsService(
                 .apply {
                     var i = 0
                     if (fromDate != null) {
-                        setTimestamp(++i, Timestamp(fromDate.time))
+                        setTimestamp(++i, Timestamp.from(fromDate))
                     }
                     setString(++i, authorIds.joinToString(","))
                     setInt(++i, limit)
@@ -61,7 +61,7 @@ class RealFeedPostsService(
         }
     }
 
-    override fun getLastPostDate(site: FeedSite): Date? {
+    override fun getLastPostDate(site: FeedSite): Instant? {
         logger.debug {
             "get_last_post_date: " +
                     "site=$site"
@@ -82,7 +82,7 @@ class RealFeedPostsService(
                 statement.executeQuery().use { resultSet ->
                     resultSet
                         .takeIf { it.next() }
-                        ?.let { Date(it.getTimestamp(1).time) }
+                        ?.getTimestamp(1)?.toInstant()
                         .also {
                             logger.debug {
                                 "got_last_post_date: " +

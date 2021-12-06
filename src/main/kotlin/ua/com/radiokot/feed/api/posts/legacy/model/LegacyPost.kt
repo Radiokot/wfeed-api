@@ -22,7 +22,7 @@ class LegacyPost(
         apiId = p.apiId,
         authorId = p.authorId,
         text = p.text ?: "",
-        date = p.date.time / 1000L,
+        date = p.date.epochSecond,
         url = p.url
     )
 }

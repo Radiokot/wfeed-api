@@ -8,7 +8,7 @@ import ua.com.radiokot.feed.api.authors.model.AuthorResource;
 import ua.com.radiokot.feed.api.jsonapi.BaseResource;
 import ua.com.radiokot.feed.posts.model.FeedPost;
 
-import java.util.Date;
+import java.time.Instant;
 import java.util.List;
 
 @Type("posts")
@@ -17,7 +17,7 @@ public class PostResource extends BaseResource {
     public String apiId;
 
     @JsonProperty("date")
-    public Date date;
+    public Instant date;
 
     @JsonProperty("text")
     public String text;

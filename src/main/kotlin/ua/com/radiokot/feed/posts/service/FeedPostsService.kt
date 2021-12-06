@@ -2,7 +2,7 @@ package ua.com.radiokot.feed.posts.service
 
 import ua.com.radiokot.feed.auhtors.model.FeedSite
 import ua.com.radiokot.feed.posts.model.FeedPost
-import java.util.*
+import java.time.Instant
 
 interface FeedPostsService {
     /**
@@ -10,9 +10,9 @@ interface FeedPostsService {
      */
     fun getPosts(
         authorIds: Set<String>,
-        fromDate: Date?,
+        fromDate: Instant?,
         limit: Int,
     ): List<FeedPost>
 
-    fun getLastPostDate(site: FeedSite): Date?
+    fun getLastPostDate(site: FeedSite): Instant?
 }

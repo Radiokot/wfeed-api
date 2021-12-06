@@ -15,7 +15,7 @@ import ua.com.radiokot.feed.auhtors.service.FeedAuthorsService
 import ua.com.radiokot.feed.posts.model.FeedPost
 import ua.com.radiokot.feed.posts.service.FeedPostsService
 import java.net.HttpURLConnection
-import java.util.*
+import java.time.Instant
 
 class PostsJsonApiController(
     private val feedPostsService: FeedPostsService,
@@ -24,7 +24,7 @@ class PostsJsonApiController(
     private val resourceConverter: ResourceConverter,
 ) {
     fun get(ctx: Context) {
-        val fromDate = ctx.queryParam<Date>("page[from_date]")
+        val fromDate = ctx.queryParam<Instant>("page[from_date]")
             .getOrNull()
 
         val limit = ctx.queryParam<Int>("page[limit]")

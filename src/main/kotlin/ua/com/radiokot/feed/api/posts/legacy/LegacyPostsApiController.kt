@@ -12,7 +12,7 @@ import ua.com.radiokot.feed.auhtors.service.FeedAuthorsService
 import ua.com.radiokot.feed.posts.model.FeedPost
 import ua.com.radiokot.feed.posts.service.FeedPostsService
 import java.net.HttpURLConnection
-import java.util.*
+import java.time.Instant
 
 class LegacyPostsApiController(
     private val feedPostsService: FeedPostsService,
@@ -24,10 +24,10 @@ class LegacyPostsApiController(
             .check({ it in (1..50) }, "Count must be between 1 and 50")
             .get()
 
-        val fromDate = ctx.queryParam<Int>("from_date", "0")
+        val fromDate = ctx.queryParam<Long>("from_date", "0")
             .get()
-            .takeIf { it != 0 }
-            ?.let { Date(it * 1000L) }
+            .takeIf { it != 0L }
+            ?.let(Instant::ofEpochSecond)
 
         val categories = ctx.queryParam("categories")
             ?.split(',')
