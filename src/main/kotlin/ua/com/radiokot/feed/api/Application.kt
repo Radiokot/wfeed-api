@@ -70,6 +70,6 @@ object Application : KoinComponent {
                     ApiBuilder.get(get<StatusJsonApiController>()::get)
                 }
             }
-            .start(getKoin().getProperty("PORT", 8041))
+            .start(getKoin().getProperty("PORT", "8041").toInt())
     }
 }
