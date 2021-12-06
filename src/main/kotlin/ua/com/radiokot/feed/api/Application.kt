@@ -15,6 +15,7 @@ import ua.com.radiokot.feed.api.di.KLoggerKoinLogger
 import ua.com.radiokot.feed.api.di.injectionModules
 import ua.com.radiokot.feed.api.jsonapi.JsonApiDate
 import ua.com.radiokot.feed.api.posts.PostsJsonApiController
+import ua.com.radiokot.feed.api.posts.legacy.LegacyPostsApiController
 import ua.com.radiokot.feed.api.status.StatusJsonApiController
 import ua.com.radiokot.feed.api.util.JavalinResponseStatusLogger
 import java.util.*
@@ -38,13 +39,18 @@ object Application : KoinComponent {
         Javalin
             .create { config ->
                 config.showJavalinBanner = false
-                config.requestLogger (JavalinResponseStatusLogger())
+                config.requestLogger(JavalinResponseStatusLogger())
             }
 
             .routes {
                 path("categories") {
                     val controller = get<LegacyCategoriesApiController>()
                     ApiBuilder.get(controller::getAll)
+                }
+
+                path("get") {
+                    val controller = get<LegacyPostsApiController>()
+                    ApiBuilder.get(controller::get)
                 }
 
                 path("v2/") {

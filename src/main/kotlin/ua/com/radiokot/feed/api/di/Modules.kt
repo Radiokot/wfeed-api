@@ -17,6 +17,7 @@ import ua.com.radiokot.feed.api.categories.model.CategoryResource
 import ua.com.radiokot.feed.api.extensions.getNotEmptyProperty
 import ua.com.radiokot.feed.api.jsonapi.JsonApiDate
 import ua.com.radiokot.feed.api.posts.PostsJsonApiController
+import ua.com.radiokot.feed.api.posts.legacy.LegacyPostsApiController
 import ua.com.radiokot.feed.api.posts.model.PostResource
 import ua.com.radiokot.feed.api.status.StatusJsonApiController
 import ua.com.radiokot.feed.api.status.model.StatusResource
@@ -123,6 +124,15 @@ val injectionModules: List<Module> = listOf(
             CategoriesJsonApiController(
                 feedCategoriesService = get(),
                 resourceConverter = get()
+            )
+        }
+
+        // Legacy posts
+        single {
+            LegacyPostsApiController(
+                feedAuthorsService = get(),
+                feedPostsService = get(),
+                feedAttachmentsService = get()
             )
         }
 

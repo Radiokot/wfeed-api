@@ -35,7 +35,8 @@ class PostsJsonApiController(
         val categories = ctx.queryParam("filter[categories]", "")
             ?.split(',')
             ?.toSet()
-            ?: setOf("1", "2", "3")
+            ?.let { it + setOf("0") }
+            ?: setOf("0", "1", "2", "3")
 
         val authorsMap = feedAuthorsService
             .getAuthors(categories)
