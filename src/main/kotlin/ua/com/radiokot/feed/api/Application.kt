@@ -3,6 +3,7 @@ package ua.com.radiokot.feed.api
 import io.javalin.Javalin
 import io.javalin.apibuilder.ApiBuilder
 import io.javalin.apibuilder.ApiBuilder.path
+import io.javalin.core.util.Header
 import io.javalin.core.validation.JavalinValidation
 import mu.KotlinLogging
 import org.koin.core.component.KoinApiExtension
@@ -41,7 +42,9 @@ object Application : KoinComponent {
                 config.showJavalinBanner = false
                 config.requestLogger(JavalinResponseStatusLogger())
             }
-
+            .after { ctx ->
+                ctx.header(Header.SERVER, "WFeed")
+            }
             .routes {
                 path("categories") {
                     val controller = get<LegacyCategoriesApiController>()
