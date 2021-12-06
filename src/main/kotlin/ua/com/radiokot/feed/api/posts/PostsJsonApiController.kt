@@ -24,10 +24,10 @@ class PostsJsonApiController(
     private val resourceConverter: ResourceConverter,
 ) {
     fun get(ctx: Context) {
-        val fromDate = ctx.queryParam<Instant>("page[from_date]")
+        val fromDate = ctx.queryParam<Instant>(PAGE_CURSOR_KEY)
             .getOrNull()
 
-        val limit = ctx.queryParam<Int>("page[limit]")
+        val limit = ctx.queryParam<Int>(PAGE_LIMIT_KEY)
             .check({ it in 1..50 }, "Limit must be between 1 and 50")
             .getOrNull()
             ?: 20
@@ -77,6 +77,15 @@ class PostsJsonApiController(
             }
         )
 
+        // Include pagination meta if further pagination is possible.
+        if (posts.size == limit) {
+            response.meta = mapOf(
+                "next" to mapOf(
+                    PAGE_CURSOR_KEY to posts.last().date
+                )
+            )
+        }
+
         ctx.apply {
             status(HttpURLConnection.HTTP_OK)
             ctx.jsonApi(
@@ -89,5 +98,10 @@ class PostsJsonApiController(
                 )
             )
         }
+    }
+
+    private companion object {
+        private const val PAGE_LIMIT_KEY = "page[limit]"
+        private const val PAGE_CURSOR_KEY = "page[cursor]"
     }
 }
