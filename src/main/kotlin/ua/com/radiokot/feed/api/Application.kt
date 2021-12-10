@@ -37,7 +37,7 @@ object Application : KoinComponent {
 
         JavalinValidation.register(Instant::class.java, JsonApiDate.javalinValidator)
 
-        Javalin
+        val javalin = Javalin
             .create { config ->
                 config.showJavalinBanner = false
                 config.requestLogger(JavalinResponseStatusLogger())
@@ -70,6 +70,12 @@ object Application : KoinComponent {
                     ApiBuilder.get(get<StatusJsonApiController>()::get)
                 }
             }
+
+        javalin
             .start(getKoin().getProperty("PORT", "8041").toInt())
+
+        Runtime.getRuntime().addShutdownHook(Thread {
+            javalin.stop()
+        })
     }
 }
