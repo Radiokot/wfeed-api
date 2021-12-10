@@ -10,6 +10,7 @@ import org.koin.core.component.KoinApiExtension
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.get
 import org.koin.core.context.startKoin
+import sun.misc.Signal
 import ua.com.radiokot.feed.api.categories.CategoriesJsonApiController
 import ua.com.radiokot.feed.api.categories.legacy.LegacyCategoriesApiController
 import ua.com.radiokot.feed.api.di.KLoggerKoinLogger
@@ -37,7 +38,7 @@ object Application : KoinComponent {
 
         JavalinValidation.register(Instant::class.java, JsonApiDate.javalinValidator)
 
-        val javalin = Javalin
+        Javalin
             .create { config ->
                 config.showJavalinBanner = false
                 config.requestLogger(JavalinResponseStatusLogger())
@@ -70,12 +71,12 @@ object Application : KoinComponent {
                     ApiBuilder.get(get<StatusJsonApiController>()::get)
                 }
             }
-
-        javalin
             .start(getKoin().getProperty("PORT", "8041").toInt())
-
-        Runtime.getRuntime().addShutdownHook(Thread {
-            javalin.stop()
-        })
+            .apply {
+                // Gracefully stop on SIGINT and SIGTERM.
+                listOf("INT", "TERM").forEach {
+                    Signal.handle(Signal(it)) { stop() }
+                }
+            }
     }
 }
