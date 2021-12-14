@@ -5,3 +5,4 @@ info:
   description: JSONAPI for Warm feed
 servers:
   - url: https://feed.radiokot.com.ua/api
+  - url: http://localhost:8041/v2
