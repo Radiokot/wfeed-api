@@ -34,3 +34,6 @@ proguard/
 
 # Secret tests
 src/test/kotlin/dev/
+
+# Node modules
+**/node_modules

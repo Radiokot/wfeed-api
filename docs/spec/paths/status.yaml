@@ -1,0 +1,15 @@
+get:
+  description: Get feed status
+  tags:
+    - Status
+  operationId: getStatus
+  responses:
+    '200':
+      description: Success
+      content:
+        application/vnd.api+json:
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/components/schemas/Status'

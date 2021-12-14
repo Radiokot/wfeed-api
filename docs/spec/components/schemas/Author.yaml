@@ -1,0 +1,39 @@
+allOf:
+  - $ref: '#/components/schemas/AuthorKey'
+  - type: object
+    required:
+      - attributes
+      - relationships
+    properties:
+      attributes:
+        type: object
+        required:
+          - api_id
+          - site
+          - photo_url
+          - name
+        properties:
+          api_id:
+            type: string
+            description: Author ID on their site
+            example: 50933509
+          site:
+            $ref: '#/components/schemas/Site'
+          photo_url:
+            type: string
+            description: Author photo URL
+            example: https://64.media.tumblr.com/avatar_21ff1192fe2f_128.pnj
+          name:
+            type: string
+            description: Name of the author
+            example: Radiokot
+      relationships:
+        type: object
+        required:
+          - category
+        properties:
+          category:
+            type: object
+            properties:
+              data:
+                $ref: '#/components/schemas/CategoryKey'

@@ -1,0 +1,7 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: Warm feed API
+  description: JSONAPI for Warm feed
+servers:
+  - url: https://feed.radiokot.com.ua/api

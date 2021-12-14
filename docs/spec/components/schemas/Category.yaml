@@ -1,0 +1,35 @@
+allOf:
+  - $ref: '#/components/schemas/CategoryKey'
+  - type: object
+    required:
+      - attributes
+    properties:
+      attributes:
+        type: object
+        required:
+          - thumb_url
+          - author_count
+          - description
+        properties:
+          thumb_url:
+            type: string
+            description: Category thumbnail image URL
+          author_count:
+            type: integer
+            description: Count of auhtors in this category
+          description:
+            type: object
+            required:
+              - uk
+              - ru
+              - en
+            properties:
+              uk:
+                type: string
+                description: Ukrainian description of the category
+              ru:
+                type: string
+                description: Russian description of the category
+              en:
+                type: string
+                description: English description of the category

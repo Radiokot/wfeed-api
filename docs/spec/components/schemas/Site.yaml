@@ -1,0 +1,6 @@
+description: Feed source site
+type: string
+enum:
+  - VK
+  - TUMBLR
+  - INTERNAL

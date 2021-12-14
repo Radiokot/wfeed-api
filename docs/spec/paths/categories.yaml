@@ -1,0 +1,17 @@
+get:
+  description: Get all the categories
+  tags:
+    - Categories
+  operationId: getCategories
+  responses:
+    '200':
+      description: Success
+      content:
+        application/vnd.api+json:
+          schema:
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Category'

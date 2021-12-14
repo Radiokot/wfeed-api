@@ -1,0 +1,55 @@
+allOf:
+  - $ref: '#/components/schemas/PhotoAttachmentKey'
+  - type: object
+    required:
+      - attributes
+    properties:
+      attributes:
+        type: object
+        required:
+          - api_id
+          - width
+          - height
+          - url_130
+          - url_604
+          - url_807
+          - url_1280
+          - url_2560
+        properties:
+          api_id:
+            type: string
+            nullable: true
+            description: Photo ID on its site
+          width:
+            type: integer
+            format: int32
+            description: Photo width in pixels
+          height:
+            type: integer
+            format: int32
+            description: Photo height in pixels
+          url_130:
+            type: string
+            format: uri
+            nullable: true
+            description: Photo URL with max width of 130 pixels
+          url_604:
+            type: string
+            format: uri
+            nullable: true
+            description: Photo URL with max width of 604 pixels
+          url_807:
+            type: string
+            format: uri
+            nullable: true
+            description: Photo URL with max width of 807 pixels
+          url_1280:
+            type: string
+            format: uri
+            nullable: true
+            description: Photo URL with max width of 1280 pixels
+          url_2560:
+            type: string
+            format: uri
+            nullable: true
+            description: Photo URL with max width of 2560 pixels

@@ -1,0 +1,53 @@
+allOf:
+  - $ref: '#/components/schemas/PostKey'
+  - type: object
+    required:
+      - attributes
+      - relationships
+    properties:
+      attributes:
+        type: object
+        required:
+          - api_id
+          - date
+          - text
+          - url
+        properties:
+          api_id:
+            type: string
+            description: Post ID on its site
+            example: 670529761717682176
+          date:
+            type: string
+            format: date-time
+            description: Post date in UTC
+            example: "2021-12-14T07:30:12Z"
+          text:
+            type: string
+            nullable: true
+            description: Post text
+            example: "NGC 3372, Mystic Mountain Top"
+          url:
+            type: string
+            format: uri
+            description: Post public URL on its site
+            example: https://the-wolf-and-moon.tumblr.com/post/670529761717682176/ngc-3372-mystic-mountain-top
+      relationships:
+        type: object
+        required:
+          - author
+          - attachments
+        properties:
+          author:
+            type: object
+            properties:
+              data:
+                $ref: '#/components/schemas/AuthorKey'  
+          attachments:
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AttachmentKey'  
+          

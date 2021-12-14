@@ -1,0 +1,31 @@
+allOf:
+  - $ref: '#/components/schemas/StatusKey'
+  - type: object
+    required:
+      - attributes
+    properties:
+      attributes:
+        type: object
+        required:
+          - last_post_date
+        properties:
+          last_post_date:
+            type: object
+            properties:
+              VK:
+                type: string
+                format: date-time
+                nullable: true
+              TUMBLR:
+                type: string
+                format: date-time
+                nullable: true
+              INTERNAL:
+                type: string
+                format: date-time
+                nullable: true
+            description: Last post date in UTC for each site
+            example:
+              "VK": "2021-12-14T09:01:00Z"
+              "TUMBLR": "2021-12-14T08:51:57Z"
+              "INTERNAL": null

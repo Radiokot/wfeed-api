@@ -1,0 +1,8 @@
+type: object
+description: Data required to load the next page
+properties:
+  next:
+    type: string
+    nullable: true
+    description: Value to use as a page[cursor]
+    example: "2021-12-14T07:30:12Z"
