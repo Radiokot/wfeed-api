@@ -8,7 +8,7 @@ There are both legacy and JSONAPI implementations.
 All the JSONAPI dates are in UTC and formatted unsing ISO 8601 instant format, e.g. `2011-12-03T10:15:30Z`.
 All the legacy dates are in UTC unixtime.
 
-Check out [Warm feed JSONAPI reference](https://radiokot.github.io/wfeed-api/)
+Check out [Warm feed JSONAPI reference](http://docs.feed.radiokot.com.ua/)
 
 ### Legacy categories
 `GET /categories`
