@@ -11,6 +11,6 @@
     "start": "swagger-repo serve -p 7002",
     "build": "swagger-repo build -o web_deploy",
     "test": "swagger-repo validate",
-    "build-static": "mkdir -p web && yarn build && redoc-cli bundle ./web_deploy/openapi.yaml  -o ./index.html && rm -rf ./web_deploy && rmdir web"
+    "build-static": "yarn build && redoc-cli bundle ./web_deploy/openapi.yaml -o ./index.html --options=web/theme.json && rm -rf ./web_deploy"
   }
 }

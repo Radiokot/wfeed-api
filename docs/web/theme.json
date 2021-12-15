@@ -1,0 +1,18 @@
+{
+  "nativeScrollbars": true,
+  "theme": {
+    "colors": {
+      "primary": {
+        "main": "#159688"
+      }
+    },
+    "sidebar": {
+      "backgroundColor": "#2FA69A",
+      "textColor": "#f8f9fa",
+      "textSize": "18pt"
+    },
+    "rightPanel": {
+      "backgroundColor": "#49332C"
+    }
+  }
+}
