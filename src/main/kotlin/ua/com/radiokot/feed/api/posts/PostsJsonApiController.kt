@@ -14,6 +14,8 @@ import ua.com.radiokot.feed.auhtors.model.FeedAuthor
 import ua.com.radiokot.feed.auhtors.service.FeedAuthorsService
 import ua.com.radiokot.feed.posts.model.FeedPost
 import ua.com.radiokot.feed.posts.service.FeedPostsService
+import ua.com.radiokot.feed.sites.model.FeedSite
+import ua.com.radiokot.feed.sites.service.FeedSitesService
 import java.net.HttpURLConnection
 import java.time.Instant
 
@@ -21,6 +23,7 @@ class PostsJsonApiController(
     private val feedPostsService: FeedPostsService,
     private val feedAuthorsService: FeedAuthorsService,
     private val feedAttachmentsService: FeedAttachmentsService,
+    private val feedSitesService: FeedSitesService,
     private val resourceConverter: ResourceConverter,
 ) {
     fun get(ctx: Context) {
@@ -42,6 +45,10 @@ class PostsJsonApiController(
             .getAuthors(categories)
             .associateBy(FeedAuthor::id)
 
+        val sitesMap = feedSitesService
+            .getSites()
+            .associateBy(FeedSite::id)
+
         val posts = feedPostsService.getPosts(
             authorIds = authorsMap.keys,
             fromDate = fromDate,
@@ -62,7 +69,9 @@ class PostsJsonApiController(
                     post,
                     authorResourceMap
                         .getOrPut(post.authorId) {
-                            AuthorResource(authorsMap.getValue(post.authorId))
+                            val author = authorsMap.getValue(post.authorId)
+                            val site = sitesMap.getValue(author.siteId)
+                            AuthorResource(author, site)
                         },
                     attachmentsByPostMap
                         .getValue(post.id)
@@ -93,6 +102,7 @@ class PostsJsonApiController(
                     response,
                     SerializationSettings.Builder()
                         .includeRelationship("author")
+                        .includeRelationship("site")
                         .includeRelationship("attachments")
                         .build()
                 )

@@ -1,6 +1,5 @@
 package ua.com.radiokot.feed.posts.service
 
-import ua.com.radiokot.feed.auhtors.model.FeedSite
 import ua.com.radiokot.feed.posts.model.FeedPost
 import java.time.Instant
 
@@ -13,6 +12,4 @@ interface FeedPostsService {
         fromDate: Instant?,
         limit: Int,
     ): List<FeedPost>
-
-    fun getLastPostDate(site: FeedSite): Instant?
 }

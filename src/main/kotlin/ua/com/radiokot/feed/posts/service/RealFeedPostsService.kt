@@ -1,7 +1,6 @@
 package ua.com.radiokot.feed.posts.service
 
 import mu.KotlinLogging
-import ua.com.radiokot.feed.auhtors.model.FeedSite
 import ua.com.radiokot.feed.posts.model.FeedPost
 import java.sql.Timestamp
 import java.time.Instant
@@ -56,40 +55,6 @@ class RealFeedPostsService(
                                     "posts=${it.size}"
                         }
                     }
-                }
-            }
-        }
-    }
-
-    override fun getLastPostDate(site: FeedSite): Instant? {
-        logger.debug {
-            "get_last_post_date: " +
-                    "site=$site"
-        }
-
-        return dataSource.connection.use { connection ->
-            val preparedStatement = connection.prepareStatement(
-                "SELECT post.date FROM post, author " +
-                        "WHERE post.author_id=author.id " +
-                        "AND author.site_id=? " +
-                        "ORDER BY post.date " +
-                        "DESC LIMIT 1"
-            ).apply {
-                setInt(1, site.i)
-            }
-
-            preparedStatement.use { statement ->
-                statement.executeQuery().use { resultSet ->
-                    resultSet
-                        .takeIf { it.next() }
-                        ?.getTimestamp(1)?.toInstant()
-                        .also {
-                            logger.debug {
-                                "got_last_post_date: " +
-                                        "site=$site, " +
-                                        "date=$it"
-                            }
-                        }
                 }
             }
         }

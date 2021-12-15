@@ -1,8 +1,20 @@
 openapi: 3.0.0
+
 info:
   version: 1.0.0
   title: Warm feed API
   description: JSONAPI for Warm feed
+  x-logo:
+    url: 'https://play-lh.googleusercontent.com/zE-PYbjYqhu4sRFqeiaz7v71Fqvbqz9XKh9NmgqBJHGv2_witWi0W1-gJ1HniEYDtg=w660-h320-rw'
+    href: 'https://play.google.com/store/apps/details?id=ua.com.radiokot.feed&hl=en'
+    backgroundColor: 'transparent'
+    altText: 'Warm feed logo'
+
 servers:
   - url: https://feed.radiokot.com.ua/api
   - url: http://localhost:8041/v2
+
+tags:
+  - name: Categories
+  - name: Posts
+  - name: Status

@@ -18,7 +18,10 @@ class RealFeedAuthorsService(
         dataSource.connection.use { connection ->
             val preparedStatement = connection
                 .prepareStatement(
-                    "SELECT * FROM author WHERE FIND_IN_SET(author.category_id, ?) <> 0"
+                    "SELECT id AS 'author.id', api_id AS 'author.api_id', " +
+                            "site_id AS 'author.site_id', category_id AS 'author.category_id', " +
+                            "name AS 'author.name', photo AS 'author.photo' " +
+                            "FROM author WHERE FIND_IN_SET(author.category_id, ?) <> 0"
                 ).apply {
                     setString(1, categoryIds.joinToString(","))
                 }

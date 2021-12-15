@@ -6,17 +6,17 @@ data class FeedAuthor(
     val id: String,
     val apiId: String,
     val categoryId: String,
-    val site: FeedSite,
+    val siteId: String,
     val name: String,
     val photoUrl: String,
 ) {
-    constructor(authorsResultSet: ResultSet) : this(
-        id = authorsResultSet.getString("id"),
-        categoryId = authorsResultSet.getString("category_id"),
-        apiId = authorsResultSet.getString("api_id"),
-        site = authorsResultSet.getInt("site_id").let { FeedSite.valueOf(it) },
-        name = authorsResultSet.getString("name"),
-        photoUrl = authorsResultSet.getString("photo"),
+    constructor(r: ResultSet) : this(
+        id = r.getString("author.id"),
+        categoryId = r.getString("author.category_id"),
+        siteId = r.getString("author.site_id"),
+        apiId = r.getString("author.api_id"),
+        name = r.getString("author.name"),
+        photoUrl = r.getString("author.photo"),
     )
 
     override fun equals(other: Any?): Boolean {

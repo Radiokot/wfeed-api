@@ -9,7 +9,6 @@ allOf:
         type: object
         required:
           - api_id
-          - site
           - photo_url
           - name
         properties:
@@ -17,8 +16,6 @@ allOf:
             type: string
             description: Author ID on their site
             example: 50933509
-          site:
-            $ref: '#/components/schemas/Site'
           photo_url:
             type: string
             description: Author photo URL
@@ -31,9 +28,15 @@ allOf:
         type: object
         required:
           - category
+          - site
         properties:
           category:
             type: object
             properties:
               data:
                 $ref: '#/components/schemas/CategoryKey'
+          site:
+            type: object
+            properties:
+              data:
+                $ref: '#/components/schemas/SiteKey'

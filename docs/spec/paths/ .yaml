@@ -1,0 +1,23 @@
+get:
+  description: |
+    Get feed status. Contains included last post dates for each source site with posts
+    and the sites themselves
+  tags:
+    - Status
+  operationId: getStatus
+  responses:
+    '200':
+      description: Success
+      content:
+        application/vnd.api+json:
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/components/schemas/Status'
+              included:
+                type: array
+                items:
+                  oneOf:
+                    - $ref: '#/components/schemas/SiteLastPostDate'
+                    - $ref: '#/components/schemas/Site'

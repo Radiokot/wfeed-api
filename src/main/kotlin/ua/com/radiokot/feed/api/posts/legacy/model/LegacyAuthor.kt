@@ -2,7 +2,7 @@ package ua.com.radiokot.feed.api.posts.legacy.model
 
 import com.fasterxml.jackson.annotation.JsonProperty
 import ua.com.radiokot.feed.auhtors.model.FeedAuthor
-import java.util.*
+import ua.com.radiokot.feed.sites.model.FeedSite
 
 class LegacyAuthor(
     @JsonProperty("id")
@@ -22,14 +22,17 @@ class LegacyAuthor(
     @JsonProperty("siteUrl")
     val siteUrl: String
 ) {
-    constructor(a: FeedAuthor): this(
+    constructor(
+        a: FeedAuthor,
+        s: FeedSite
+    ) : this(
         id = a.id,
         apiId = a.apiId,
         authorName = a.name,
         authorPhoto = a.photoUrl,
-        siteId = a.site.i.toString(),
+        siteId = s.id,
         categoryId = a.categoryId,
-        siteName = a.site.name.toLowerCase(Locale.ENGLISH).capitalize(Locale.ENGLISH),
+        siteName = s.name,
         siteUrl = "https://feed.radiokot.com.ua"
     )
 }

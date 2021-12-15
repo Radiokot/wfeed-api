@@ -11,6 +11,8 @@ import ua.com.radiokot.feed.auhtors.model.FeedAuthor
 import ua.com.radiokot.feed.auhtors.service.FeedAuthorsService
 import ua.com.radiokot.feed.posts.model.FeedPost
 import ua.com.radiokot.feed.posts.service.FeedPostsService
+import ua.com.radiokot.feed.sites.model.FeedSite
+import ua.com.radiokot.feed.sites.service.FeedSitesService
 import java.net.HttpURLConnection
 import java.time.Instant
 
@@ -18,6 +20,7 @@ class LegacyPostsApiController(
     private val feedPostsService: FeedPostsService,
     private val feedAuthorsService: FeedAuthorsService,
     private val feedAttachmentsService: FeedAttachmentsService,
+    private val feedSitesService: FeedSitesService,
 ) {
     fun get(ctx: Context) {
         val count = ctx.queryParam<Int>("count", "50")
@@ -38,6 +41,10 @@ class LegacyPostsApiController(
         val authorsMap = feedAuthorsService
             .getAuthors(categories)
             .associateBy(FeedAuthor::id)
+
+        val sitesMap = feedSitesService
+            .getSites()
+            .associateBy(FeedSite::id)
 
         val posts = feedPostsService.getPosts(
             authorIds = authorsMap.keys,
@@ -65,7 +72,10 @@ class LegacyPostsApiController(
 
         val response = LegacyPostsResponse(
             posts = posts.map(::LegacyPost),
-            authors = authorsOfPosts.map(::LegacyAuthor),
+            authors = authorsOfPosts.map { author ->
+                val site = sitesMap.getValue(author.siteId)
+                LegacyAuthor(author, site)
+            },
             atts = mappedAttachments,
             info = LegacyPostsResponse.Info(
                 authorsCount = authorsOfPosts.size,

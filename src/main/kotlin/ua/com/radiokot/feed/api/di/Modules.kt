@@ -18,7 +18,9 @@ import ua.com.radiokot.feed.api.jsonapi.JsonApiDate
 import ua.com.radiokot.feed.api.posts.PostsJsonApiController
 import ua.com.radiokot.feed.api.posts.legacy.LegacyPostsApiController
 import ua.com.radiokot.feed.api.posts.model.PostResource
+import ua.com.radiokot.feed.api.sites.model.SiteResource
 import ua.com.radiokot.feed.api.status.StatusJsonApiController
+import ua.com.radiokot.feed.api.status.model.SiteLastPostDateResource
 import ua.com.radiokot.feed.api.status.model.StatusResource
 import ua.com.radiokot.feed.attachments.service.FeedAttachmentsService
 import ua.com.radiokot.feed.attachments.service.RealFeedAttachmentsService
@@ -28,6 +30,8 @@ import ua.com.radiokot.feed.categories.service.FeedCategoriesService
 import ua.com.radiokot.feed.categories.service.RealFeedCategoriesService
 import ua.com.radiokot.feed.posts.service.FeedPostsService
 import ua.com.radiokot.feed.posts.service.RealFeedPostsService
+import ua.com.radiokot.feed.sites.service.FeedSitesService
+import ua.com.radiokot.feed.sites.service.RealFeedSitesService
 import javax.sql.DataSource
 
 val injectionModules: List<Module> = listOf(
@@ -62,6 +66,12 @@ val injectionModules: List<Module> = listOf(
 
         single<FeedAttachmentsService> {
             RealFeedAttachmentsService(
+                dataSource = get()
+            )
+        }
+
+        single<FeedSitesService> {
+            RealFeedSitesService(
                 dataSource = get()
             )
         }
@@ -101,7 +111,9 @@ val injectionModules: List<Module> = listOf(
                 AuthorResource::class.java,
                 AttachmentResource::class.java,
                 PhotoAttachmentResource::class.java,
-                StatusResource::class.java
+                StatusResource::class.java,
+                SiteLastPostDateResource::class.java,
+                SiteResource::class.java,
             )
         }
     },
@@ -128,7 +140,8 @@ val injectionModules: List<Module> = listOf(
             LegacyPostsApiController(
                 feedAuthorsService = get(),
                 feedPostsService = get(),
-                feedAttachmentsService = get()
+                feedAttachmentsService = get(),
+                feedSitesService = get(),
             )
         }
 
@@ -138,6 +151,7 @@ val injectionModules: List<Module> = listOf(
                 feedAuthorsService = get(),
                 feedPostsService = get(),
                 feedAttachmentsService = get(),
+                feedSitesService = get(),
                 resourceConverter = get()
             )
         }
@@ -145,7 +159,7 @@ val injectionModules: List<Module> = listOf(
         // Status
         single {
             StatusJsonApiController(
-                feedPostsService = get(),
+                feedSitesService = get(),
                 resourceConverter = get()
             )
         }

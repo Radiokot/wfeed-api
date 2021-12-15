@@ -1,5 +1,7 @@
 get:
-  description: Get page of posts ordered by date in descending order
+  description: |
+    Get page of posts ordered by date in descending order.
+    Contains included attachments and authors
   tags:
     - Posts
   operationId: getPostsPage

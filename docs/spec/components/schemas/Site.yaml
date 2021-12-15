@@ -1,6 +1,15 @@
-description: Feed source site
-type: string
-enum:
-  - VK
-  - TUMBLR
-  - INTERNAL
+allOf:
+  - $ref: '#/components/schemas/SiteKey'
+  - type: object
+    required:
+      - attributes
+    properties:
+      attributes:
+        type: object
+        required:
+          - name
+        properties:
+          name:
+            type: string
+            description: Site name
+            example: Tumblr

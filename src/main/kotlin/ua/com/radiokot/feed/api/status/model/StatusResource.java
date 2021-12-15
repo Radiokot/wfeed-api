@@ -1,20 +1,25 @@
 package ua.com.radiokot.feed.api.status.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.github.jasminb.jsonapi.annotations.Relationship;
 import com.github.jasminb.jsonapi.annotations.Type;
 import ua.com.radiokot.feed.api.jsonapi.BaseResource;
-import ua.com.radiokot.feed.auhtors.model.FeedSite;
+import ua.com.radiokot.feed.sites.model.FeedSite;
 
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 @Type("status")
 public class StatusResource extends BaseResource {
-    @JsonProperty("last_post_date")
-    public Map<FeedSite, Instant> lastPostDate;
+    @Relationship("last_post_dates")
+    public List<SiteLastPostDateResource> lastPostDates;
 
-    public StatusResource(Map<FeedSite, Instant> lastPostDate) {
+    public StatusResource(Map<FeedSite, Instant> lastPostDates) {
         super(Long.toString(System.currentTimeMillis()));
-        this.lastPostDate = lastPostDate;
+        this.lastPostDates = new ArrayList<>(lastPostDates.size());
+        lastPostDates.forEach((site, lastPostDate) ->
+                this.lastPostDates.add(new SiteLastPostDateResource(site, lastPostDate))
+        );
     }
 }

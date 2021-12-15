@@ -1,0 +1,27 @@
+allOf:
+  - $ref: '#/components/schemas/SiteLastPostDateKey'
+  - type: object
+    required:
+      - attributes
+      - relationships
+    properties:
+      attributes:
+        type: object
+        required:
+          - date
+        properties:
+          date:
+            type: string
+            format: date-time
+            description: Last post date of the site in UTC
+            example: "2021-12-15T08:56:05Z"
+      relationships:
+        type: object
+        required:
+          - site
+        properties:
+          site:
+            type: object
+            properties:
+              data:
+                $ref: '#/components/schemas/SiteKey'
