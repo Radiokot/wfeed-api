@@ -11,7 +11,7 @@ class LegacyPost(
     @JsonProperty("authorId")
     val authorId: String,
     @JsonProperty("text")
-    val text: String,
+    var text: String,
     @JsonProperty("date")
     val date: Long,
     @JsonProperty("url")

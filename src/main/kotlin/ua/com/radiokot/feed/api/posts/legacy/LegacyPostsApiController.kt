@@ -86,6 +86,12 @@ class LegacyPostsApiController(
             )
         )
 
+        response.posts.forEach { post ->
+            if (sitesMap[authorsMap[post.authorId]?.siteId]?.name?.startsWith("VK") == true) {
+                post.text = ""
+            }
+        }
+
         ctx.apply {
             status(HttpURLConnection.HTTP_OK)
             json(response)
